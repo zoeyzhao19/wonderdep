@@ -1,0 +1,81 @@
+{
+  "name": "wonderdep",
+  "version": "0.0.0",
+  "description": "Found the nearest package version of a specify dep version",
+  "keywords": [],
+  "homepage": "https://github.com/zoeyzhao19/wonder-dep#readme",
+  "bugs": "https://github.com/zoeyzhao19/wonder-dep/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoeyzhao19/wonder-dep.git"
+  },
+  "license": "MIT",
+  "author": "",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.ts"
+      ]
+    }
+  },
+  "bin": {
+    "wonder": "./bin/index.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rimraf dist && unbuild",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 2",
+    "dev": "unbuild --stub",
+    "lint": "eslint --fix ./src/**",
+    "prepare": "husky install",
+    "release": "bump --commit \"release: v%s\" --tag --push",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "version": "pnpm changelog"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,tsx,ts}": [
+      "eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "cac": "^6.7.14",
+    "consola": "^3.2.3",
+    "pacote": "^15.2.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config-ts": "^0.39.8",
+    "@commitlint/cli": "^17.6.7",
+    "@commitlint/config-conventional": "^17.6.7",
+    "@jsdevtools/version-bump-prompt": "^6.1.0",
+    "@npmcli/config": "^7.0.0",
+    "@types/npmcli__config": "^6.0.0",
+    "@types/pacote": "^11.1.5",
+    "@types/semver": "^7.5.0",
+    "commitlint": "^17.6.7",
+    "conventional-changelog-cli": "^3.0.0",
+    "eslint": "^8.46.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.1.6",
+    "unbuild": "^1.2.1",
+    "vitest": "^0.33.0"
+  },
+  "packageManager": "pnpm@7.33.5"
+}

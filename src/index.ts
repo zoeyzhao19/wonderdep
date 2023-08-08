@@ -1,0 +1,1 @@
+export { resolvePkg } from './resolve'
