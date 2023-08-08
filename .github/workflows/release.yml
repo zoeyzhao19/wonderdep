@@ -19,6 +19,6 @@ jobs:
           node-version: 16
           cache: 'pnpm'
 
-      - run: pnpm changelogithub
+      - run: npx changelogithub
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
