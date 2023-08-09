@@ -3,11 +3,11 @@
   "version": "0.1.12",
   "description": "Found the nearest package version of a specify dep version",
   "keywords": [],
-  "homepage": "https://github.com/zoeyzhao19/wonder-dep#readme",
-  "bugs": "https://github.com/zoeyzhao19/wonder-dep/issues",
+  "homepage": "https://github.com/zoeyzhao19/wonderdep#readme",
+  "bugs": "https://github.com/zoeyzhao19/wonderdep/issues",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zoeyzhao19/wonder-dep.git"
+    "url": "git+https://github.com/zoeyzhao19/wonderdep.git"
   },
   "license": "MIT",
   "author": "",
