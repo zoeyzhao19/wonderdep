@@ -21,3 +21,5 @@ jobs:
 
       - run: pnpm install conventional-github-releaser
       - run: npx conventional-github-releaser -p angular
+        env:
+            CONVENTIONAL_GITHUB_RELEASER_TOKEN: ${{secrets.CONVENTIONAL_GITHUB_RELEASER_TOKEN }}
