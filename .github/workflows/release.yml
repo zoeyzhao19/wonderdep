@@ -19,6 +19,5 @@ jobs:
           node-version: 16
           cache: 'pnpm'
 
-      - run: npx changelogithub
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - run: pnpm install -g conventional-github-releaser
+      - run: conventional-github-releaser -p angular
