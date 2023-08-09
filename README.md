@@ -12,19 +12,12 @@ npm install -g wonderdep
 
 ## Usage
 
-### Programmatic
-```js
-import { resolvePkg } from 'wonderdep'
-
-const result = await resolvePkg('somePackage', ['foo@x.x.x', 'bar@x.x.x'])
-```
-
 ### CLI
 ```bash
 wonder <somePackage> --deps <foo@x.x.x>, <bar@x.x.x>
 ```
 
-> For example: wonder foo --deps bar@1.2.3 would find the available `foo` package which could depend on bar@1.2.3 with a semantic version
+> For example: we are in a vite + vue project with vite@2.9.5, if we want to install vite plugin(vite-plugin-xxx) which depend on vite as its devDependency, then maybe we want a proper version of vite-plugin-xxx to suit for the vite version for our project, this time `wonder vite-plugin-xxx --deps vite@2.9.5` helps 
  
 ## LICENSE
 MIT
