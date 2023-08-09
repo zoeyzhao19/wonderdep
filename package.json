@@ -1,6 +1,6 @@
 {
   "name": "wonderdep",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Found the nearest package version of a specify dep version",
   "keywords": [],
   "homepage": "https://github.com/zoeyzhao19/wonder-dep#readme",
@@ -42,10 +42,9 @@
     "dev": "unbuild --stub",
     "lint": "eslint --fix ./src/**",
     "prepare": "husky install",
-    "release": "bump --commit \"release: v%s\" --tag --push --all",
+    "release": "vitest run && changelogen --release && git push --follow-tags && npm publish",
     "test": "vitest",
-    "typecheck": "tsc --noEmit",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 2 && git add CHANGELOG.md"
+    "typecheck": "tsc --noEmit"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts}": [
@@ -53,7 +52,10 @@
     ]
   },
   "dependencies": {
+    "-": "^0.0.1",
+    "D": "^1.0.0",
     "cac": "^6.7.14",
+    "changelogen": "^0.5.4",
     "consola": "^3.2.3",
     "pacote": "^15.2.0"
   },

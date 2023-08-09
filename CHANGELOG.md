@@ -1,3 +1,7 @@
+## v0.1.10
+
+[compare changes](https://github.com/zoeyzhao19/wonder-dep/compare/v0.1.9...v0.1.10)
+
 ## [0.1.9](https://github.com/zoeyzhao19/wonder-dep/compare/v0.1.8...v0.1.9) (2023-08-09)
 
 
