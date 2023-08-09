@@ -1,3 +1,15 @@
+## v0.1.11
+
+[compare changes](https://github.com/zoeyzhao19/wonder-dep/compare/v0.1.10...v0.1.11)
+
+### 🏡 Chore
+
+- Update ([88108d4](https://github.com/zoeyzhao19/wonder-dep/commit/88108d4))
+
+### ❤️  Contributors
+
+- 赵龙生 <zoeyzhao19@gmail.com>
+
 ## v0.1.10
 
 [compare changes](https://github.com/zoeyzhao19/wonder-dep/compare/v0.1.9...v0.1.10)
