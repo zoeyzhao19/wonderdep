@@ -42,7 +42,7 @@
     "dev": "unbuild --stub",
     "lint": "eslint --fix ./src/**",
     "prepare": "husky install",
-    "release": "bump --commit \"release: v%s\" --tag --push",
+    "release": "bump --commit \"release: v%s\" --tag --push --all",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r && git add CHANGELOG.md"
