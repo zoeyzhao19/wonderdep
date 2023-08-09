@@ -45,7 +45,7 @@
     "release": "bump --commit \"release: v%s\" --tag --push --all",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r && git add CHANGELOG.md"
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s -r 2 && git add CHANGELOG.md"
   },
   "lint-staged": {
     "**/*.{js,jsx,tsx,ts}": [
