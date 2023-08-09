@@ -36,10 +36,10 @@ function resolveVersion(pkg: string): ResolvedVersion {
   return [pkgName, type, +major, +minor, +patch]
 }
 
-export async function resolvePkg(host: string, deps: string[]) {
-  consola.start(`resolving all available versions of ${host}...`)
+export async function resolvePkg(packageName: string, deps: string[]) {
+  consola.start(`resolving all available versions of ${packageName}...`)
 
-  const pack = await resolveHostPkgPack(host)
+  const pack = await resolveHostPkgPack(packageName)
 
   const cache = await loadCache()
   let shouldUpdateCache = false
@@ -53,17 +53,17 @@ export async function resolvePkg(host: string, deps: string[]) {
       break
     }
 
-    const hostVersions = Object.keys(pack.versions).reverse()
-    for (const hostVersion of hostVersions) {
+    const packageVersions = Object.keys(pack.versions).reverse()
+    for (const packageVersion of packageVersions) {
       if (found)
         break
       let manifestDeps: Record<string, string>
-      if (!cache[`${host}@${hostVersion}`]) {
-        consola.start(`resolving manifest for ${host}@${hostVersion}...`)
-        const hostManifest = await resolveHostPkgManifest(`${host}@${hostVersion}`)
+      if (!cache[`${packageName}@${packageVersion}`]) {
+        consola.start(`resolving manifest for ${packageName}@${packageVersion}...`)
+        const hostManifest = await resolveHostPkgManifest(`${packageName}@${packageVersion}`)
         manifestDeps = { ...hostManifest.dependencies, ...hostManifest.devDependencies, ...hostManifest.optionalDependencies }
         shouldUpdateCache = true
-        cache[`${host}@${hostVersion}`] = {
+        cache[`${packageName}@${packageVersion}`] = {
           name: hostManifest.name,
           version: hostManifest.version,
           dependencies: hostManifest.dependencies,
@@ -72,12 +72,12 @@ export async function resolvePkg(host: string, deps: string[]) {
         }
       }
       else {
-        const cacheInfo = cache[`${host}@${hostVersion}`]
+        const cacheInfo = cache[`${packageName}@${packageVersion}`]
         manifestDeps = { ...cacheInfo.dependencies, ...cacheInfo.devDependencies, ...cacheInfo.optionalDependencies }
       }
 
-      const cacheName = cache[`${host}@${hostVersion}`].name
-      const cacheVersion = cache[`${host}@${hostVersion}`].version
+      const cacheName = cache[`${packageName}@${packageVersion}`].name
+      const cacheVersion = cache[`${packageName}@${packageVersion}`].version
 
       if (manifestDeps[depVersion[0]]) {
         const manifestVersions = manifestDeps[depVersion[0]]?.trim().split('||')
@@ -96,7 +96,7 @@ export async function resolvePkg(host: string, deps: string[]) {
         }
       }
       else {
-        consola.info(`The dep ${dep} is not specified in the latest ${host}@${hostVersion}, abort to resolve more`)
+        consola.info(`The dep ${dep} is not specified in the latest ${packageName}@${packageVersion}, abort to resolve more`)
         break
       }
     }
@@ -106,8 +106,8 @@ export async function resolvePkg(host: string, deps: string[]) {
 
   if (result.length) {
     consola.success('package resolved succeed')
-    consola.info(`Found the nearest ${host} version for ${deps.join(', ')}`)
-    consola.info(`${result.join('\n  ')}\n`)
+    consola.success(`Found the nearest ${packageName} version for ${deps.join(', ')}`)
+    consola.success(`${result.join('\n  ')}\n`)
   }
 
   return result
