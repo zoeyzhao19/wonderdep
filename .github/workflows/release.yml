@@ -19,5 +19,5 @@ jobs:
           node-version: 16
           cache: 'pnpm'
 
-      - run: pnpm install -g conventional-github-releaser
-      - run: conventional-github-releaser -p angular
+      - run: pnpm install conventional-github-releaser
+      - run: npx conventional-github-releaser -p angular
