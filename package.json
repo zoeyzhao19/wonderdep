@@ -1,6 +1,6 @@
 {
   "name": "wonderdep",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Found the nearest package version of a specify dep version",
   "keywords": [],
   "homepage": "https://github.com/zoeyzhao19/wonder-dep#readme",

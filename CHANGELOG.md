@@ -1,3 +1,11 @@
+## [0.1.8](https://github.com/zoeyzhao19/wonder-dep/compare/v0.1.7...v0.1.8) (2023-08-09)
+
+
+
+## [0.1.7](https://github.com/zoeyzhao19/wonder-dep/compare/v0.1.6...v0.1.7) (2023-08-09)
+
+
+
 ## [0.1.7](https://github.com/zoeyzhao19/wonder-dep/compare/v0.1.6...v0.1.7) (2023-08-09)
 
 
