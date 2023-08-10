@@ -1,3 +1,25 @@
+## v0.1.15
+
+[compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.1.14...v0.1.15)
+
+### 💅 Refactors
+
+- Rename some variables ([26d07f4](https://github.com/zoeyzhao19/wonderdep/commit/26d07f4))
+
+### 📖 Documentation
+
+- Update readme ([50de577](https://github.com/zoeyzhao19/wonderdep/commit/50de577))
+
+### 🏡 Chore
+
+- Cleanup ([e63d615](https://github.com/zoeyzhao19/wonderdep/commit/e63d615))
+- Renovate ([e3a70f0](https://github.com/zoeyzhao19/wonderdep/commit/e3a70f0))
+- Update ([92f5362](https://github.com/zoeyzhao19/wonderdep/commit/92f5362))
+
+### ❤️  Contributors
+
+- 赵龙生 <zoeyzhao19@gmail.com>
+
 ## v0.1.14
 
 [compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.1.13...v0.1.14)
