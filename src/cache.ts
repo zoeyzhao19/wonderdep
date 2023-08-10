@@ -11,7 +11,7 @@ const cachePath = resolve(cacheDir, 'cache.json')
 
 export async function loadCache() {
   if (existsSync(cachePath)) {
-    consola.info(`cache loaded from ${cachePath}`)
+    // consola.info(`cache loaded from ${cachePath}`)
     cache = JSON.parse(await fs.readFile(cachePath, 'utf-8'))
   }
   return cache
