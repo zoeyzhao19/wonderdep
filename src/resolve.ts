@@ -38,8 +38,8 @@ function resolveVersion(pkg: string): ResolvedVersion {
   return [pkgName, type, +major, +minor, +patch]
 }
 
-export async function resolvePkg(packageName: string, deps: string[]) {
-  const pack = await resolveHostPkgPack(packageName)
+export async function resolvePkg(packageNameV: string, deps: string[]) {
+  const pack = await resolveHostPkgPack(packageNameV)
 
   const cache = await loadCache()
   let shouldUpdateCache = false
@@ -58,11 +58,12 @@ export async function resolvePkg(packageName: string, deps: string[]) {
       if (found)
         break
       let manifestDeps: Record<string, string>
-      if (!cache[`${packageName}@${packageVersion}`]) {
-        const hostManifest = await resolveHostPkgManifest(`${packageName}@${packageVersion}`)
+      const packageWithVersion = packageNameV.split('@')[1] ? packageNameV : `${packageNameV}@${packageVersion}`
+      if (!cache[`${packageWithVersion}`]) {
+        const hostManifest = await resolveHostPkgManifest(`${packageWithVersion}`)
         manifestDeps = { ...hostManifest.dependencies, ...hostManifest.devDependencies, ...hostManifest.optionalDependencies }
         shouldUpdateCache = true
-        cache[`${packageName}@${packageVersion}`] = {
+        cache[`${packageWithVersion}`] = {
           name: hostManifest.name,
           version: hostManifest.version,
           dependencies: hostManifest.dependencies,
@@ -71,18 +72,19 @@ export async function resolvePkg(packageName: string, deps: string[]) {
         }
       }
       else {
-        const cacheInfo = cache[`${packageName}@${packageVersion}`]
+        const cacheInfo = cache[`${packageWithVersion}`]
         manifestDeps = { ...cacheInfo.dependencies, ...cacheInfo.devDependencies, ...cacheInfo.optionalDependencies }
       }
 
-      const cacheName = cache[`${packageName}@${packageVersion}`].name
-      const cacheVersion = cache[`${packageName}@${packageVersion}`].version
+      const cacheName = cache[`${packageWithVersion}`].name
+      const cacheVersion = cache[`${packageWithVersion}`].version
 
       if (manifestDeps[depInfos[0]]) {
         const depVersions = manifestDeps[depInfos[0]]?.trim().split('||')
         for (let depVersion of depVersions) {
           depVersion = /^d+/.test(depVersion) ? `@${depVersion}` : depVersion
           if (!depInfos[2]) {
+            // deps that does not specify the version would resolved directly
             result.push(`${cacheName}@${cacheVersion} => ${manifestDeps[depInfos[0]]?.trim()}`)
             found = true
             break
@@ -95,7 +97,7 @@ export async function resolvePkg(packageName: string, deps: string[]) {
         }
       }
       else {
-        consola.info(`The dep ${dep} is not specified in the latest ${packageName}@${packageVersion}, abort to resolve more`)
+        consola.info(`The dep ${dep} is not specified in the latest ${packageWithVersion}, abort to resolve more`)
         break
       }
     }
@@ -105,7 +107,7 @@ export async function resolvePkg(packageName: string, deps: string[]) {
 
   if (result.length) {
     consola.success('package resolved succeed')
-    consola.success(`Found the nearest ${packageName} version for ${deps.join(', ')}`)
+    consola.success(`Found the nearest ${packageNameV} version for ${deps.join(', ')}`)
     consola.success(`${result.join('\n  ')}\n`)
   }
 
