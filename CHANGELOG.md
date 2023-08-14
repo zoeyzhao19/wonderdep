@@ -1,3 +1,15 @@
+## v0.1.16
+
+[compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.1.15...v0.1.16)
+
+### 🩹 Fixes
+
+- Test case ([11713e2](https://github.com/zoeyzhao19/wonderdep/commit/11713e2))
+
+### ❤️  Contributors
+
+- 赵龙生 <zoeyzhao19@gmail.com>
+
 ## v0.1.15
 
 [compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.1.14...v0.1.15)
