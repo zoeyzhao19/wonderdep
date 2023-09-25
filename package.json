@@ -57,22 +57,22 @@
     "pacote": "^17.0.4"
   },
   "devDependencies": {
-    "@antfu/eslint-config-ts": "^0.42.0",
+    "@antfu/eslint-config-ts": "^0.43.1",
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@npmcli/config": "^7.2.0",
-    "@types/npmcli__config": "^6.0.0",
-    "@types/pacote": "^11.1.5",
+    "@types/npmcli__config": "^6.0.1",
+    "@types/pacote": "^11.1.6",
     "@types/semver": "^7.5.2",
     "changelogen": "^0.5.5",
     "commitlint": "^17.7.1",
-    "eslint": "^8.49.0",
+    "eslint": "^8.50.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.3.0",
     "rimraf": "^5.0.1",
     "typescript": "^5.2.2",
     "unbuild": "^2.0.0",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.5"
   },
   "packageManager": "pnpm@8.7.6"
 }
