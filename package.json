@@ -60,7 +60,7 @@
     "@antfu/eslint-config-ts": "^0.43.1",
     "@commitlint/cli": "^17.8.0",
     "@commitlint/config-conventional": "^17.8.0",
-    "@npmcli/config": "^7.2.0",
+    "@npmcli/config": "^8.0.0",
     "@types/npmcli__config": "^6.0.1",
     "@types/pacote": "^11.1.6",
     "@types/semver": "^7.5.3",
