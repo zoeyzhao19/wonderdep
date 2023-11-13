@@ -61,18 +61,18 @@
     "@commitlint/cli": "^17.8.1",
     "@commitlint/config-conventional": "^17.8.1",
     "@npmcli/config": "^8.0.1",
-    "@types/npmcli__config": "^6.0.2",
-    "@types/pacote": "^11.1.7",
-    "@types/semver": "^7.5.4",
+    "@types/npmcli__config": "^6.0.3",
+    "@types/pacote": "^11.1.8",
+    "@types/semver": "^7.5.5",
     "changelogen": "^0.5.5",
     "commitlint": "^17.8.1",
     "eslint": "^8.53.0",
     "husky": "^8.0.3",
-    "lint-staged": "^15.0.2",
+    "lint-staged": "^15.1.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2",
     "unbuild": "^2.0.0",
     "vitest": "^0.34.6"
   },
-  "packageManager": "pnpm@8.10.2"
+  "packageManager": "pnpm@8.10.3"
 }
