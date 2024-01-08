@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { resolveHostVersion } from '../src/resolve'
+import { resolveHostVersion } from '../src'
 
 describe('resolve', async () => {
   // test('resolve a specify dep version from a specify host package ', async () => {

@@ -1,1 +1,1 @@
-export { resolvePkg, resolveDepsVersion } from './resolve'
+export { resolvePkg, resolveHostVersion } from './resolve'
