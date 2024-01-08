@@ -1,14 +1,22 @@
 import cac from 'cac'
-import { consola } from 'consola'
+import { version } from '../package.json'
+import { log } from './log'
 import { resolveHostVersion } from './resolve'
+import { cleanCache } from './cache'
 
 const cli = cac('wonder')
 
+cli.command('cache [type]')
+  .action((type: string) => {
+    if (type === 'clean')
+      cleanCache()
+  })
+
 cli.command('<packageName>', 'raw package name, and should not append with a version. e.g: vitest')
-  .option('--deps <deps>', 'deps which is depended, should append with a semver version')
+  .option('--deps <...deps>', 'deps which is depended, should append with a semver version')
   .action((packageName, options) => {
     if (!options.deps) {
-      consola.warn('No deps provided')
+      log.warn('No deps provided')
       return
     }
     const deps = options.deps || ''
@@ -16,4 +24,5 @@ cli.command('<packageName>', 'raw package name, and should not append with a ver
   })
 
 cli.help()
+cli.version(version)
 cli.parse()

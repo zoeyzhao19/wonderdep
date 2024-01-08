@@ -1,6 +1,6 @@
-import { consola } from 'consola'
 import pacote from 'pacote'
 import { valid } from 'semver'
+import { log } from './log'
 import { compareVersion } from './compare'
 import { dumpCache, loadCache } from './cache'
 
@@ -11,13 +11,13 @@ function ensureSpecifyDep(dep: string) {
 }
 
 async function resolveHostPkgPack(name: string) {
-  consola.info(`🍳 resolving all available versions of ${name}...`)
+  log.info(`🍳 resolving all available versions of ${name}...`)
   const pack = await pacote.packument(name)
   return pack
 }
 
 export async function resolvePkgManifest(name: string) {
-  consola.info(`🍳 resolving manifest for ${name}...`)
+  log.info(`🍳 resolving manifest for ${name}...`)
   const manifest = await pacote.manifest(name)
   return manifest
 }
@@ -34,7 +34,7 @@ function resolveVersion(pkg: string): ResolvedVersion | undefined {
     type = '='
 
   else if (!['=', '^', '~', '<=', '>='].includes(type))
-    consola.error(`The type ${type} of ${pkgName} is not supported`)
+    log.error(`The type ${type} of ${pkgName} is not supported`)
 
   if (!pkgVersion)
     return [pkgName, type, undefined, undefined, undefined]
@@ -65,7 +65,7 @@ export async function resolveHostVersion(hostPkgName: string, deps: string[]) {
 
     const resolved = resolveVersion(dep) // resolve dep with version info [pkgName, type, major, minor, patch]
     if (!resolved) {
-      consola.info(`The dep ${dep} is not valid, skip`)
+      log.info(`The dep ${dep} is not valid, skip`)
       break
     }
 
@@ -105,7 +105,7 @@ export async function resolveHostVersion(hostPkgName: string, deps: string[]) {
         }
       }
       else {
-        consola.info(`The dep ${dep} is not specified in ${packageWithVersion}, abort to resolve more`)
+        log.info(`The dep ${dep} is not specified in ${packageWithVersion}, abort to resolve more`)
         break
       }
     }
@@ -114,9 +114,9 @@ export async function resolveHostVersion(hostPkgName: string, deps: string[]) {
   shouldUpdateCache && await dumpCache()
 
   if (result.length) {
-    consola.success('package resolved succeed')
-    consola.success(`Found the nearest ${hostPkgName} version for ${deps.join(', ')}`)
-    consola.success(`${result.join('\n  ')}\n`)
+    log.success('package resolved succeed')
+    log.success(`Found the nearest ${hostPkgName} version for ${deps.join(', ')}`)
+    log.success(`${result.join('\n  ')}\n`)
   }
 
   return result

@@ -2,7 +2,7 @@
 import { resolve } from 'node:path'
 import os from 'node:os'
 import { existsSync, promises as fs } from 'node:fs'
-import { consola } from 'consola'
+import { log } from './log'
 
 let cache: Record<string, Record<string, any>> = {}
 
@@ -11,20 +11,35 @@ const cachePath = resolve(cacheDir, 'cache.json')
 
 export async function loadCache() {
   if (existsSync(cachePath)) {
-    // consola.info(`cache loaded from ${cachePath}`)
-    cache = JSON.parse(await fs.readFile(cachePath, 'utf-8'))
+    const content = await fs.readFile(cachePath, 'utf-8')
+    cache = JSON.parse(content || '{}')
   }
   return cache
 }
 
 export async function dumpCache() {
   try {
-    await fs.mkdir(cacheDir, { recursive: true })
+    if (!existsSync(cachePath))
+      await fs.mkdir(cacheDir, { recursive: true })
+
     await fs.writeFile(cachePath, JSON.stringify(cache), 'utf-8')
-    consola.info(`cache saved to ${cachePath}`)
+    log.info(`cache saved to ${cachePath}`)
   }
   catch (err) {
-    consola.warn('Failed to save cache')
-    consola.warn(err)
+    log.warn('Failed to save cache')
+    log.warn(err)
+  }
+}
+
+export async function cleanCache() {
+  try {
+    if (existsSync(cachePath)) {
+      await fs.truncate(cachePath, 0)
+      log.success('cache cleaned')
+    }
+  }
+  catch (err) {
+    log.warn('Failed to clean cache')
+    log.warn(err)
   }
 }
