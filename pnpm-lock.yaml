@@ -14,6 +14,9 @@ dependencies:
   pacote:
     specifier: ^17.0.5
     version: 17.0.5
+  semver:
+    specifier: ^7.5.4
+    version: 7.5.4
 
 devDependencies:
   '@antfu/eslint-config-ts':
@@ -55,9 +58,6 @@ devDependencies:
   rimraf:
     specifier: ^5.0.5
     version: 5.0.5
-  semver:
-    specifier: ^7.5.4
-    version: 7.5.4
   typescript:
     specifier: ^5.3.3
     version: 5.3.3
