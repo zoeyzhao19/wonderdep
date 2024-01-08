@@ -42,7 +42,7 @@
     "dev": "unbuild --stub",
     "lint": "eslint --fix ./src/**",
     "prepare": "husky install",
-    "release": "vitest run && changelogen --release && git push --follow-tags && npm publish",
+    "release": "nr build && vitest run && changelogen --release && git push --follow-tags && npm publish",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
