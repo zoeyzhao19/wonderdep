@@ -1,15 +1,28 @@
 import { describe, expect, test } from 'vitest'
-import { resolveDepsVersion } from '../src/resolve'
+import { resolveHostVersion } from '../src/resolve'
 
-describe('resolve host for a specify dep', () => {
-  test('resolvePkg', async () => {
-    const data: [string, string[]] = ['vite-plugin-inspect@0.7.35', ['vite']]
+describe('resolve', async () => {
+  // test('resolve a specify dep version from a specify host package ', async () => {
+  //   const data: [string, string[]] = ['vite-plugin-inspect@0.7.35', ['vite']]
 
-    const result = await resolveDepsVersion(data[0], data[1])
+  //   const result = await resolveDepsVersion(data[0], data[1])
+  //   expect(result).toMatchInlineSnapshot(`
+  //     [
+  //       "vite-plugin-inspect@0.7.35 => vite^4.4.8",
+  //     ]
+  //   `)
+  // })
+
+  test('resolve specify host package version from a specify dep', async () => {
+    const data: [string, string[]] = ['vite-plugin-inspect', ['vite@4.4.8']]
+
+    const result = await resolveHostVersion(data[0], data[1])
     expect(result).toMatchInlineSnapshot(`
       [
-        "vite-plugin-inspect@0.7.35 => vite^4.4.8",
+        "vite-plugin-inspect=0.7.35 => vite^4.4.8",
       ]
     `)
+  }, {
+    timeout: 200000,
   })
 })

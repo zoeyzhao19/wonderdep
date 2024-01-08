@@ -1,12 +1,13 @@
 import { consola } from 'consola'
 import pacote from 'pacote'
+import { valid } from 'semver'
 import { compareVersion } from './compare'
 import { dumpCache, loadCache } from './cache'
 
-export type ResolvedVersion = [string, '@' | '^' | '~', number | undefined, number | undefined, number | undefined]
+export type ResolvedVersion = [string, '^' | '~' | '=' | '<' | '>' | '<=' | '>=', string | undefined, string | undefined, string | undefined]
 
 function ensureSpecifyDep(dep: string) {
-  return dep.replace(/(\S+?)[\^~](.*)/, '$1@$2')
+  return dep.replace(/(\S+?)[\^~@](.*)/, '$1=$2')
 }
 
 async function resolveHostPkgPack(name: string) {
@@ -15,20 +16,24 @@ async function resolveHostPkgPack(name: string) {
   return pack
 }
 
-async function resolveHostPkgManifest(name: string) {
+export async function resolvePkgManifest(name: string) {
   consola.info(`🍳 resolving manifest for ${name}...`)
   const manifest = await pacote.manifest(name)
   return manifest
 }
 
-function resolveVersion(pkg: string): ResolvedVersion {
-  const [pkgName, pkgVersion] = pkg.split(/[@^~]/)
+function resolveVersion(pkg: string): ResolvedVersion | undefined {
+  const [pkgName, pkgVersion] = pkg.split(/(?:<=)|(?:>=)|(?:[\^~=<>])/)
+
   let type: any = pkg.slice(pkgName.length, pkgName.length + 1)
 
-  if (!type)
-    type = '@'
+  if (!valid(pkgVersion))
+    return
 
-  else if (!['@', '^', '~'].includes(type))
+  if (!type || type === '@')
+    type = '='
+
+  else if (!['=', '^', '~', '<=', '>='].includes(type))
     consola.error(`The type ${type} of ${pkgName} is not supported`)
 
   if (!pkgVersion)
@@ -37,7 +42,7 @@ function resolveVersion(pkg: string): ResolvedVersion {
   const [release] = pkgVersion.split(/[-+]/)
   const [major, minor, patch] = release.split('.')
 
-  return [pkgName, type, +major, +minor, +patch]
+  return [pkgName, type, major, minor, patch]
 }
 
 /**
@@ -45,11 +50,11 @@ function resolveVersion(pkg: string): ResolvedVersion {
  * @deprecated use `resolveDepsVersion` instead
  */
 export async function resolvePkg(hostPkgNameWithV: string, deps: string[]) {
-  return resolveDepsVersion(hostPkgNameWithV, deps)
+  return resolveHostVersion(hostPkgNameWithV, deps)
 }
 
-export async function resolveDepsVersion(hostPkgNameWithV: string, deps: string[]) {
-  const pack = await resolveHostPkgPack(hostPkgNameWithV)
+export async function resolveHostVersion(hostPkgName: string, deps: string[]) {
+  const pack = await resolveHostPkgPack(hostPkgName)
 
   const cache = await loadCache()
   let shouldUpdateCache = false
@@ -57,17 +62,23 @@ export async function resolveDepsVersion(hostPkgNameWithV: string, deps: string[
   const result: string[] = []
   for (let dep of deps) {
     dep = ensureSpecifyDep(dep)
-    let found = false
+
     const resolved = resolveVersion(dep) // resolve dep with version info [pkgName, type, major, minor, patch]
+    if (!resolved) {
+      consola.info(`The dep ${dep} is not valid, skip`)
+      break
+    }
 
     const packageVersions = Object.keys(pack.versions).reverse()
+    let found = false
     for (const packageVersion of packageVersions) {
       if (found)
         break
+
       let manifestDeps: Record<string, string>
-      const packageWithVersion = hostPkgNameWithV.split('@')[1] ? hostPkgNameWithV : `${hostPkgNameWithV}@${packageVersion}`
+      const packageWithVersion = `${hostPkgName}@${packageVersion}`
       if (!cache[`${packageWithVersion}`]) {
-        const hostManifest = await resolveHostPkgManifest(`${packageWithVersion}`)
+        const hostManifest = await resolvePkgManifest(`${packageWithVersion}`)
         manifestDeps = { ...hostManifest.dependencies, ...hostManifest.devDependencies, ...hostManifest.optionalDependencies }
         shouldUpdateCache = true
         cache[`${packageWithVersion}`] = {
@@ -87,24 +98,14 @@ export async function resolveDepsVersion(hostPkgNameWithV: string, deps: string[
       const cacheVersion = cache[`${packageWithVersion}`].version
 
       if (manifestDeps[resolved[0]]) {
-        const depVersions = manifestDeps[resolved[0]]?.trim().split('||')
-        for (let depVersion of depVersions) {
-          depVersion = /^d+/.test(depVersion) ? `@${depVersion}` : depVersion
-          if (!resolved[2]) {
-            // deps that does not specify the version would resolved directly
-            result.push(`${cacheName}@${cacheVersion} => ${resolved[0]}${manifestDeps[resolved[0]]?.trim()}`)
-            found = true
-            break
-          }
-          else if (compareVersion(resolved, resolveVersion(`${resolved[0]}${depVersion}`))) {
-            result.push(`${cacheName}@${cacheVersion} => ${resolved[0]}${manifestDeps[resolved[0]]?.trim()}`)
-            found = true
-            break
-          }
+        if (compareVersion(resolved, manifestDeps[resolved[0]])) {
+          result.push(`${cacheName}=${cacheVersion} => ${resolved[0]}${manifestDeps[resolved[0]]?.trim()}`)
+          found = true
+          break
         }
       }
       else {
-        consola.info(`The dep ${dep} is not specified in the latest ${packageWithVersion}, abort to resolve more`)
+        consola.info(`The dep ${dep} is not specified in ${packageWithVersion}, abort to resolve more`)
         break
       }
     }
@@ -114,7 +115,7 @@ export async function resolveDepsVersion(hostPkgNameWithV: string, deps: string[
 
   if (result.length) {
     consola.success('package resolved succeed')
-    consola.success(`Found the nearest ${hostPkgNameWithV} version for ${deps.join(', ')}`)
+    consola.success(`Found the nearest ${hostPkgName} version for ${deps.join(', ')}`)
     consola.success(`${result.join('\n  ')}\n`)
   }
 
