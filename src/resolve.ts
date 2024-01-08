@@ -6,8 +6,17 @@ import { dumpCache, loadCache } from './cache'
 
 export type ResolvedVersion = [string, '^' | '~' | '=' | '<' | '>' | '<=' | '>=', string | undefined, string | undefined, string | undefined]
 
-function ensureSpecifyDep(dep: string) {
+const modifierReg = /(?:<=)|(?:>=)|(?:[\^~=<>@])/
+
+function ensureSpecifyDepVersion(dep: string) {
   return dep.replace(/(\S+?)[\^~@](.*)/, '$1=$2')
+}
+
+function ensureRawName(name: string) {
+  const [raw, version] = name.split(modifierReg)
+  if (version !== undefined)
+    log.warn(`${name} should not append with a version, use ${raw}`)
+  return raw
 }
 
 async function resolveHostPkgPack(name: string) {
@@ -23,7 +32,7 @@ export async function resolvePkgManifest(name: string) {
 }
 
 function resolveVersion(pkg: string): ResolvedVersion | undefined {
-  const [pkgName, pkgVersion] = pkg.split(/(?:<=)|(?:>=)|(?:[\^~=<>])/)
+  const [pkgName, pkgVersion] = pkg.split(modifierReg)
 
   let type: any = pkg.slice(pkgName.length, pkgName.length + 1)
 
@@ -54,6 +63,7 @@ export async function resolvePkg(hostPkgNameWithV: string, deps: string[]) {
 }
 
 export async function resolveHostVersion(hostPkgName: string, deps: string[]) {
+  hostPkgName = ensureRawName(hostPkgName)
   const pack = await resolveHostPkgPack(hostPkgName)
 
   const cache = await loadCache()
@@ -61,7 +71,7 @@ export async function resolveHostVersion(hostPkgName: string, deps: string[]) {
 
   const result: string[] = []
   for (let dep of deps) {
-    dep = ensureSpecifyDep(dep)
+    dep = ensureSpecifyDepVersion(dep)
 
     const resolved = resolveVersion(dep) // resolve dep with version info [pkgName, type, major, minor, patch]
     if (!resolved) {
