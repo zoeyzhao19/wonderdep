@@ -12,6 +12,6 @@ describe('resolve', async () => {
       ]
     `)
   }, {
-    timeout: 200000,
+    timeout: 3000,
   })
 })
