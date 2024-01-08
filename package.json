@@ -1,6 +1,6 @@
 {
   "name": "wonderdep",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "Found the nearest package version of a specify dep version",
   "keywords": [],
   "homepage": "https://github.com/zoeyzhao19/wonderdep#readme",
@@ -54,7 +54,8 @@
   "dependencies": {
     "cac": "^6.7.14",
     "consola": "^3.2.3",
-    "pacote": "^17.0.5"
+    "pacote": "^17.0.5",
+    "semver": "^7.5.4"
   },
   "devDependencies": {
     "@antfu/eslint-config-ts": "^0.43.1",
@@ -70,7 +71,6 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.2.0",
     "rimraf": "^5.0.5",
-    "semver": "^7.5.4",
     "typescript": "^5.3.3",
     "unbuild": "^2.0.0",
     "vitest": "^1.1.3"

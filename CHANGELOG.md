@@ -1,3 +1,29 @@
+## v0.1.18
+
+[compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.1.17...v0.1.18)
+
+### 🚀 Enhancements
+
+- Rename ([78935d9](https://github.com/zoeyzhao19/wonderdep/commit/78935d9))
+- Use semver to compare ([8f3676f](https://github.com/zoeyzhao19/wonderdep/commit/8f3676f))
+- Allow cache clean ([5cc8376](https://github.com/zoeyzhao19/wonderdep/commit/5cc8376))
+
+### 🩹 Fixes
+
+- Cli ([e996b61](https://github.com/zoeyzhao19/wonderdep/commit/e996b61))
+- Import ([268ed7d](https://github.com/zoeyzhao19/wonderdep/commit/268ed7d))
+- Check host package raw name ([e150c37](https://github.com/zoeyzhao19/wonderdep/commit/e150c37))
+
+### 🏡 Chore
+
+- **release:** V0.1.17 ([d28294c](https://github.com/zoeyzhao19/wonderdep/commit/d28294c))
+- Update ([1ac4a89](https://github.com/zoeyzhao19/wonderdep/commit/1ac4a89))
+- Update test ([29aba3a](https://github.com/zoeyzhao19/wonderdep/commit/29aba3a))
+
+### ❤️ Contributors
+
+- 赵龙生 <zoeyzhao19@gmail.com>
+
 ## v0.1.17
 
 [compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.1.16...v0.1.17)
