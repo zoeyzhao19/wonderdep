@@ -1,3 +1,23 @@
+## v0.2.0
+
+[compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.1.18...v0.2.0)
+
+### 🚀 Enhancements
+
+- ⚠️  Re-release ([f0acd1f](https://github.com/zoeyzhao19/wonderdep/commit/f0acd1f))
+
+### 🩹 Fixes
+
+- Ci ([12eca87](https://github.com/zoeyzhao19/wonderdep/commit/12eca87))
+
+#### ⚠️ Breaking Changes
+
+- ⚠️  Re-release ([f0acd1f](https://github.com/zoeyzhao19/wonderdep/commit/f0acd1f))
+
+### ❤️ Contributors
+
+- 赵龙生 <zoeyzhao19@gmail.com>
+
 ## v0.1.18
 
 [compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.1.17...v0.1.18)
