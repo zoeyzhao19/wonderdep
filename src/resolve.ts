@@ -56,7 +56,7 @@ function resolveVersion(pkg: string): ResolvedVersion | undefined {
 
 /**
  *
- * @deprecated use `resolveDepsVersion` instead
+ * @deprecated use `resolveHostVersion` instead
  */
 export async function resolvePkg(hostPkgNameWithV: string, deps: string[]) {
   return resolveHostVersion(hostPkgNameWithV, deps)
