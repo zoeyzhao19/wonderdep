@@ -11,9 +11,8 @@ cli.command('<packageName>', 'raw package name, and should not append with a ver
       consola.warn('No deps provided')
       return
     }
-    console.log({ deps: options.deps })
-    // const deps = options.deps || ''
-    // resolveHostVersion(packageName, deps.split(' '))
+    const deps = options.deps || ''
+    resolveHostVersion(packageName, deps.split(' '))
   })
 
 cli.help()
