@@ -13,10 +13,12 @@ function ensureSpecifyDepVersion(dep: string) {
 }
 
 function ensureRawName(name: string) {
-  const [raw, version] = name.split(modifierReg)
+  let prefix = ''
+  const n = name.startsWith('@') ? (prefix = '@', name.slice(1)) : name
+  const [raw, version] = n.split(modifierReg)
   if (version !== undefined)
     log.warn(`${name} should not append with a version, use ${raw}`)
-  return raw
+  return `${prefix}${raw}`
 }
 
 async function resolveHostPkgPack(name: string) {
@@ -108,6 +110,9 @@ export async function resolveHostVersion(hostPkgName: string, deps: string[]) {
       const cacheVersion = cache[`${packageWithVersion}`].version
 
       if (manifestDeps[resolved[0]]) {
+        if (manifestDeps[resolved[0]] === 'workspace:*')
+          continue
+
         if (compareVersion(resolved, manifestDeps[resolved[0]])) {
           result.push(`${cacheName}=${cacheVersion} => ${resolved[0]}${manifestDeps[resolved[0]]?.trim()}`)
           found = true
