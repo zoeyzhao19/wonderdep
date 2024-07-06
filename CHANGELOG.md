@@ -1,3 +1,15 @@
+## v0.3.2
+
+[compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.3.1...v0.3.2)
+
+### 🚀 Enhancements
+
+- Support scoped packages ([8157d48](https://github.com/zoeyzhao19/wonderdep/commit/8157d48))
+
+### ❤️ Contributors
+
+- 赵龙生 <zoeyzhao19@gmail.com>
+
 ## v0.3.1
 
 [compare changes](https://github.com/zoeyzhao19/wonderdep/compare/v0.3.0...v0.3.1)
