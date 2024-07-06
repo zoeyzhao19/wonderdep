@@ -34,8 +34,10 @@ export async function resolvePkgManifest(name: string) {
 }
 
 function resolveVersion(pkg: string): ResolvedVersion | undefined {
-  const [pkgName, pkgVersion] = pkg.split(modifierReg)
-
+  let prefix = ''
+  const n = pkg.startsWith('@') ? (prefix = '@', pkg.slice(1)) : pkg
+  let [pkgName, pkgVersion] = n.split(modifierReg)
+  pkgName = `${prefix}${pkgName}`
   let type: any = pkg.slice(pkgName.length, pkgName.length + 1)
 
   if (!valid(pkgVersion))
